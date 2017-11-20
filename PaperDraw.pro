@@ -11,18 +11,26 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = PaperDraw
 TEMPLATE = app
 
+
 SOURCES += main.cpp\
         mainwindow.cpp \
     calibrationdialog.cpp \
-    settingsdialog.cpp
+    settingsdialog.cpp \
+    layerswindow.cpp \
+    toolwindow.cpp
 
 HEADERS  += mainwindow.h \
     calibrationdialog.h \
-    settingsdialog.h
+    settingsdialog.h \
+    layerswindow.h \
+    toolwindow.h \
+    button.h
 
 FORMS    += mainwindow.ui \
     calibrationdialog.ui \
-    settingsdialog.ui
+    settingsdialog.ui \
+    layerswindow.ui \
+    toolwindow.ui
 
 LIBS += `pkg-config opencv --libs`
 
