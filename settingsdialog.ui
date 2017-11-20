@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>540</width>
-    <height>334</height>
+    <width>551</width>
+    <height>351</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,10 +25,10 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>290</y>
+     <x>330</x>
+     <y>310</y>
      <width>211</width>
-     <height>32</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="orientation">
@@ -53,7 +53,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>30</y>
       <width>59</width>
       <height>21</height>
@@ -91,7 +91,7 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>50</y>
       <width>59</width>
       <height>21</height>
@@ -114,7 +114,7 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>70</y>
       <width>59</width>
       <height>21</height>
@@ -137,16 +137,16 @@
      <string notr="true">background-color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="setColor">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>70</y>
-      <width>81</width>
-      <height>22</height>
+      <x>173</x>
+      <y>71</y>
+      <width>78</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -156,7 +156,7 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>90</y>
       <width>59</width>
       <height>21</height>
@@ -260,7 +260,7 @@
     </property>
     <item>
      <property name="text">
-      <string>Right</string>
+      <string>Left</string>
      </property>
     </item>
     <item>
@@ -270,7 +270,7 @@
     </item>
     <item>
      <property name="text">
-      <string>Left</string>
+      <string>Right</string>
      </property>
     </item>
    </widget>
@@ -278,7 +278,7 @@
   <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>280</x>
      <y>10</y>
      <width>261</width>
      <height>161</height>
@@ -290,7 +290,7 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>30</y>
       <width>59</width>
       <height>21</height>
@@ -328,7 +328,7 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>50</y>
       <width>59</width>
       <height>21</height>
@@ -351,7 +351,7 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>70</y>
       <width>59</width>
       <height>21</height>
@@ -374,16 +374,16 @@
      <string notr="true">background-color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="setColor_2">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>70</y>
-      <width>81</width>
-      <height>22</height>
+      <x>173</x>
+      <y>71</y>
+      <width>78</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -393,7 +393,7 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>90</y>
       <width>59</width>
       <height>21</height>
@@ -438,7 +438,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>1</string>
+     <string>2</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="penBox_2">
@@ -497,7 +497,7 @@
     </property>
     <item>
      <property name="text">
-      <string>Right</string>
+      <string>Left</string>
      </property>
     </item>
     <item>
@@ -507,7 +507,7 @@
     </item>
     <item>
      <property name="text">
-      <string>Left</string>
+      <string>Right</string>
      </property>
     </item>
    </widget>
@@ -516,7 +516,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>160</y>
+     <y>180</y>
      <width>261</width>
      <height>161</height>
     </rect>
@@ -527,7 +527,7 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>30</y>
       <width>59</width>
       <height>21</height>
@@ -565,7 +565,7 @@
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>50</y>
       <width>59</width>
       <height>21</height>
@@ -588,7 +588,7 @@
    <widget class="QLabel" name="label_11">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>70</y>
       <width>59</width>
       <height>21</height>
@@ -611,16 +611,16 @@
      <string notr="true">background-color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="setColor_3">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>70</y>
-      <width>81</width>
-      <height>22</height>
+      <x>173</x>
+      <y>71</y>
+      <width>78</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -630,7 +630,7 @@
    <widget class="QLabel" name="label_12">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>90</y>
       <width>59</width>
       <height>21</height>
@@ -675,7 +675,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>1</string>
+     <string>3</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="penBox_3">
@@ -734,7 +734,7 @@
     </property>
     <item>
      <property name="text">
-      <string>Right</string>
+      <string>Left</string>
      </property>
     </item>
     <item>
@@ -744,7 +744,7 @@
     </item>
     <item>
      <property name="text">
-      <string>Left</string>
+      <string>Right</string>
      </property>
     </item>
    </widget>

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QColor>
+#include <QKeyEvent>
 #define TBUTTONS 4
 
 namespace Ui {
@@ -16,7 +17,7 @@ struct Button {
     bool usePen = false;
     int mouse = 0;
     int pen = 0;
-    char key = '1';
+    int key = Qt::Key_1;
 
     int tool = 0;
     QColor color;
@@ -32,6 +33,9 @@ public:
     ~MainWindow();
 
     Button buttons[TBUTTONS];
+
+protected:
+    void keyPressEvent(QKeyEvent *event);
 
 private slots:
     void on_actionCalibrate_triggered();

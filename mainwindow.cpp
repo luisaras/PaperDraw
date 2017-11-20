@@ -16,6 +16,14 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+    QWidget::keyPressEvent(event);
+    for (int i = 1; i < TBUTTONS; i++) {
+        if (buttons[i].useKey && buttons[i].key == event->key()) {
+            // bla
+        }
+    }
+}
 
 void MainWindow::on_actionCalibrate_triggered()
 {
@@ -27,6 +35,6 @@ void MainWindow::on_actionCalibrate_triggered()
 void MainWindow::on_actionPreferences_triggered()
 {
     SettingsDialog* dialog = new SettingsDialog(this);
-    dialog->exec();
+    dialog->exec(this);
     delete dialog;
 }
