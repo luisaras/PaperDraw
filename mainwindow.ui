@@ -182,6 +182,9 @@
    <property name="text">
     <string>Show/hide camera image</string>
    </property>
+   <property name="shortcut">
+    <string>C</string>
+   </property>
   </action>
   <action name="actionCalibrate">
    <property name="text">

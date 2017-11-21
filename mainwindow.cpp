@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // 2-size eraser
     buttons[1].tool = 1;
-    buttons[1].size = 2;
+    buttons[1].size = 8;
     buttons[1].useKey = true;
     buttons[1].key = Qt::Key_2;
     buttons[1].useMouse = true;
@@ -44,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Test file
     newLayer();
     newLayer();
+    file.bg = new QImage("sketch.jpg");
 
     toolWindow = new ToolWindow(this);
     toolWindow->show();
@@ -51,6 +52,21 @@ MainWindow::MainWindow(QWidget *parent) :
 
     LayersWindow* lw = new LayersWindow(this);
     lw->show();
+
+    QRect r = geometry();
+    offsetX = r.width() / 2 - file.width / 2;
+    offsetY = r.height() / 2 - file.height / 2;
+}
+
+void MainWindow::paintEvent(QPaintEvent *) {
+    QPainter painter(this);
+    if (file.bg and showCamera) {
+        painter.drawImage(offsetX, offsetY, *file.bg);
+    }
+    painter.drawRect(offsetX, offsetY, file.width, file.height);
+    for (uint i = 0; i < file.layers.size(); i++) {
+        painter.drawImage(offsetX, offsetY, *file.layers[i]);
+    }
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
@@ -153,7 +169,7 @@ void MainWindow::usePen(QPainter &painter, QPoint &pos) {
     painter.setBrush(brush);
     QPen pen(brush, toolWindow->button.size);
     painter.setPen(pen);
-    painter.drawLine(cursorX, cursorY, pos.x(), pos.y());
+    painter.drawLine(cursorX - offsetX, cursorY - offsetY, pos.x() - offsetX, pos.y() - offsetY);
 }
 
 void MainWindow::useEraser(QPainter&, QPoint &pos) {
@@ -162,22 +178,12 @@ void MainWindow::useEraser(QPainter&, QPoint &pos) {
     QImage* layer = file.layers[file.layer];
     for(int i = -size; i <= size; i++) {
         for(int j = -size; j <= size; j++) {
-            layer->setPixelColor(pos.x() + i, pos.y() + j, transparent);
+            layer->setPixelColor(pos.x() + i - offsetX, pos.y() + j - offsetY, transparent);
         }
     }
 }
 
 void MainWindow::useBucket(QPainter&, QPoint&) {
-}
-
-void MainWindow::paintEvent(QPaintEvent *) {
-    QPainter painter(this);
-    if (file.bg) {
-        painter.drawImage(0, 0, *file.bg);
-    }
-    for (uint i = 0; i < file.layers.size(); i++) {
-        painter.drawImage(0, 0, *file.layers[i]);
-    }
 }
 
 void MainWindow::on_actionCalibrate_triggered() {
@@ -197,5 +203,9 @@ void MainWindow::on_actionUndo_2_triggered() { undo(); }
 void MainWindow::on_actionRedo_triggered() { redo(); }
 void MainWindow::on_actionRedo_2_triggered() { redo(); }
 
-MainWindow::~MainWindow() { delete ui; }
+void MainWindow::on_actionShow_hide_camera_image_triggered() {
+    showCamera = !showCamera;
+    repaint();
+}
 
+MainWindow::~MainWindow() { delete ui; }

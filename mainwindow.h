@@ -73,14 +73,20 @@ private slots:
 
     void on_actionRedo_2_triggered();
 
+    void on_actionShow_hide_camera_image_triggered();
+
 private:
     Ui::MainWindow *ui;
     ToolWindow* toolWindow;
     double cursorX = -1;
     double cursorY = -1;
+    double offsetX = 0;
+    double offsetY = 0;
     std::vector<State> actionStack;
     uint state = 0;
     int usedButton = -1;
+
+    bool showCamera = true;
 
     int getButton(int key);
 };
