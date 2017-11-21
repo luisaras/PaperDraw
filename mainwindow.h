@@ -3,8 +3,7 @@
 
 #include <QMainWindow>
 #include <QColor>
-#include <QPainter>
-#include <QPixmap>
+#include <QImage>
 #include "toolwindow.h"
 #define TBUTTONS 3
 #define INITW 300
@@ -12,15 +11,26 @@
 
 namespace Ui {
     struct File;
+    struct State;
     class MainWindow;
 }
 
+struct State {
+    uint layer;
+    QImage* current;
+    QImage* previous;
+    State() {}
+    State(uint l, QImage *p, QImage* c) {
+        layer = l; previous = p; current = c;
+    }
+};
+
 struct File {
-    QPixmap* bg;
-    std::vector<QPixmap*> layers;
+    QImage* bg;
+    std::vector<QImage*> layers;
     uint width = INITW;
     uint height = INITH;
-    int layer = 0;
+    uint layer = 0;
     QString path = "";
 };
 
@@ -34,6 +44,13 @@ public:
 
     void useTool();
     void newLayer();
+    void newState();
+    void undo();
+    void redo();
+
+    void usePen(QPainter &painter, QPoint &pos);
+    void useEraser(QPainter &painter, QPoint &pos);
+    void useBucket(QPainter &painter, QPoint &pos);
 
     File file;
     Button buttons[TBUTTONS];
@@ -48,13 +65,24 @@ private slots:
 
     void on_actionPreferences_triggered();
 
+    void on_actionUndo_triggered();
+
+    void on_actionUndo_2_triggered();
+
+    void on_actionRedo_triggered();
+
+    void on_actionRedo_2_triggered();
+
 private:
     Ui::MainWindow *ui;
     ToolWindow* toolWindow;
     double cursorX = -1;
     double cursorY = -1;
-    std::vector<QPainter*> painters;
+    std::vector<State> actionStack;
+    uint state = 0;
+    int usedButton = -1;
 
+    int getButton(int key);
 };
 
 #endif // MAINWINDOW_H

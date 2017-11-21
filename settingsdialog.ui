@@ -110,6 +110,9 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
    </widget>
    <widget class="QLabel" name="label_3">
     <property name="geometry">
@@ -347,6 +350,9 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
    </widget>
    <widget class="QLabel" name="label_7">
     <property name="geometry">
@@ -583,6 +589,9 @@
       <width>131</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
     </property>
    </widget>
    <widget class="QLabel" name="label_11">

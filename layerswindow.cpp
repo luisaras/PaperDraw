@@ -11,10 +11,7 @@ LayersWindow::LayersWindow(MainWindow *parent) :
     mainWindow = parent;
 }
 
-LayersWindow::~LayersWindow()
-{
-    delete ui;
-}
+LayersWindow::~LayersWindow() { delete ui; }
 
 void LayersWindow::on_listWidget_clicked(const QModelIndex &index)
 {

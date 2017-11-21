@@ -22,9 +22,21 @@
      <height>192</height>
     </rect>
    </property>
+   <property name="dragEnabled">
+    <bool>true</bool>
+   </property>
+   <property name="dragDropOverwriteMode">
+    <bool>true</bool>
+   </property>
+   <property name="currentRow">
+    <number>0</number>
+   </property>
    <item>
     <property name="text">
      <string>Layer 1</string>
+    </property>
+    <property name="flags">
+     <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled|ItemIsTristate</set>
     </property>
    </item>
    <item>

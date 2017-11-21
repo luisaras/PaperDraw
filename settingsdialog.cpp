@@ -48,12 +48,12 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
 int SettingsDialog::exec(MainWindow* mw) {
     for(int i = 0; i < BUTTONS; i++) {
-        setButton(mw->buttons[i + 1], i);
+        setButton(mw->buttons[i], i);
     }
     int result = exec();
     if (result) {
         for(int i = 0; i < BUTTONS; i++) {
-            updateButton(mw->buttons[i + 1], i);
+            updateButton(mw->buttons[i], i);
         }
     }
     return result;
@@ -95,7 +95,6 @@ void SettingsDialog::setColor(QColor& init, int i) {
     color += "," + QString::number(rgb[1]);
     color += "," + QString::number(rgb[2]);
     color += ")";
-
     QString style = "background-color: rgb" + color + ";";
     colorPreviews[i]->setStyleSheet(style);
     colors[i] = init;
@@ -108,22 +107,16 @@ void SettingsDialog::getColor(int i) {
     }
 }
 
-SettingsDialog::~SettingsDialog()
-{
-    delete ui;
-}
-
-void SettingsDialog::on_setColor_clicked()
-{
+void SettingsDialog::on_setColor_clicked() {
     getColor(0);
 }
 
-void SettingsDialog::on_setColor_2_clicked()
-{
+void SettingsDialog::on_setColor_2_clicked() {
     getColor(1);
 }
 
-void SettingsDialog::on_setColor_3_clicked()
-{
+void SettingsDialog::on_setColor_3_clicked() {
     getColor(2);
 }
+
+SettingsDialog::~SettingsDialog() { delete ui; }

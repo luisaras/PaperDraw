@@ -39,22 +39,16 @@ void ToolWindow::getColor() {
     }
 }
 
-ToolWindow::~ToolWindow()
-{
-    delete ui;
-}
-
-void ToolWindow::on_setColor_clicked()
-{
+void ToolWindow::on_setColor_clicked() {
     getColor();
 }
 
-void ToolWindow::on_spinBox_valueChanged(int arg1)
-{
+void ToolWindow::on_spinBox_valueChanged(int arg1) {
     button.size = arg1;
 }
 
-void ToolWindow::on_toolBox_currentIndexChanged(int index)
-{
+void ToolWindow::on_toolBox_currentIndexChanged(int index) {
     button.tool = index;
 }
+
+ToolWindow::~ToolWindow() { delete ui; }
