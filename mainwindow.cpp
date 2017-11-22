@@ -4,12 +4,9 @@
 #include "settingsdialog.h"
 #include "toolwindow.h"
 #include "layerswindow.h"
+#include "toolhandler.h"
 
 #include <QPainter>
-#include <QRect>
-#include <QPen>
-#include <QDesktopWidget>
-
 #include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -82,8 +79,19 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
     }
     if (!event->isAutoRepeat())
         newState();
+
+    QPoint pos = mapFromGlobal(QCursor::pos()) - QPoint(offsetX, offsetY);
+    if (cursorX < 0)
+        cursorX = pos.x();
+    if (cursorY < 0)
+        cursorY = pos.y();
+    QPoint lastPos(cursorX, cursorY);
     toolWindow->setTool(buttons[i]);
-    useTool();
+    ToolHandler handler(file.layers[file.layer], toolWindow->button, pos, lastPos);
+    handler.useTool();
+    cursorX = pos.x();
+    cursorY = pos.y();
+    repaint();
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *event) {
@@ -114,76 +122,11 @@ void MainWindow::newLayer() {
 void MainWindow::newState() {
     if (state < actionStack.size()) {
         actionStack.resize(state);
-        std::cout << state << actionStack.size();
     }
     state++;
     QImage* newLayer = new QImage(*file.layers[file.layer]);
     actionStack.push_back(State(file.layer, file.layers[file.layer], newLayer));
     file.layers[file.layer] = newLayer;
-}
-
-void MainWindow::undo() {
-    if (state > 0) {
-        state--;
-        State &s = actionStack[state];
-        file.layers[s.layer] = s.previous;
-        repaint();
-        std::cout << "undo" << std::endl;
-    }
-}
-
-void MainWindow::redo() {
-    if (state < actionStack.size()) {
-        State &s = actionStack[state];
-        file.layers[s.layer] = s.current;
-        state++;
-        repaint();
-        std::cout << "redo" << std::endl;
-    }
-}
-
-void MainWindow::useTool() {
-    QPainter painter(file.layers[file.layer]);
-    QPoint pos = mapFromGlobal(QCursor::pos());
-    if (cursorX < 0)
-        cursorX = pos.x();
-    if (cursorY < 0)
-        cursorY = pos.y();
-    switch (toolWindow->button.tool) {
-    case 0:
-        usePen(painter, pos);
-        break;
-    case 1:
-        useEraser(painter, pos);
-        break;
-    case 2:
-        useBucket(painter, pos);
-    }
-    cursorX = pos.x();
-    cursorY = pos.y();
-    repaint();
-}
-
-void MainWindow::usePen(QPainter &painter, QPoint &pos) {
-    QBrush brush(toolWindow->button.color);
-    painter.setBrush(brush);
-    QPen pen(brush, toolWindow->button.size);
-    painter.setPen(pen);
-    painter.drawLine(cursorX - offsetX, cursorY - offsetY, pos.x() - offsetX, pos.y() - offsetY);
-}
-
-void MainWindow::useEraser(QPainter&, QPoint &pos) {
-    int size = toolWindow->button.size / 2;
-    QColor transparent(255, 255, 255, 0);
-    QImage* layer = file.layers[file.layer];
-    for(int i = -size; i <= size; i++) {
-        for(int j = -size; j <= size; j++) {
-            layer->setPixelColor(pos.x() + i - offsetX, pos.y() + j - offsetY, transparent);
-        }
-    }
-}
-
-void MainWindow::useBucket(QPainter&, QPoint&) {
 }
 
 void MainWindow::on_actionCalibrate_triggered() {
@@ -198,10 +141,23 @@ void MainWindow::on_actionPreferences_triggered() {
     delete dialog;
 }
 
-void MainWindow::on_actionUndo_triggered() { undo(); }
-void MainWindow::on_actionUndo_2_triggered() { undo(); }
-void MainWindow::on_actionRedo_triggered() { redo(); }
-void MainWindow::on_actionRedo_2_triggered() { redo(); }
+void MainWindow::on_actionUndo_triggered() {
+    if (state > 0) {
+        state--;
+        State &s = actionStack[state];
+        file.layers[s.layer] = s.previous;
+        repaint();
+    }
+}
+
+void MainWindow::on_actionRedo_triggered() {
+    if (state < actionStack.size()) {
+        State &s = actionStack[state];
+        file.layers[s.layer] = s.current;
+        state++;
+        repaint();
+    }
+}
 
 void MainWindow::on_actionShow_hide_camera_image_triggered() {
     showCamera = !showCamera;

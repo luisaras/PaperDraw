@@ -16,14 +16,16 @@ SOURCES += main.cpp\
     calibrationdialog.cpp \
     settingsdialog.cpp \
     layerswindow.cpp \
-    toolwindow.cpp
+    toolwindow.cpp \
+    toolhandler.cpp
 
 HEADERS  += mainwindow.h \
     calibrationdialog.h \
     settingsdialog.h \
     layerswindow.h \
     toolwindow.h \
-    button.h
+    button.h \
+    toolhandler.h
 
 FORMS    += mainwindow.ui \
     calibrationdialog.ui \

@@ -83,23 +83,6 @@
    <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-   <addaction name="separator"/>
-   <addaction name="actionUndo_2"/>
-   <addaction name="actionRedo_2"/>
-   <addaction name="separator"/>
-   <addaction name="actionZoom_in_2"/>
-   <addaction name="actionZoom_out_2"/>
-   <addaction name="separator"/>
-   <addaction name="actionTransform_2"/>
-   <addaction name="actionDeform_2"/>
-  </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew">
    <property name="text">
@@ -207,36 +190,6 @@
   <action name="actionManual">
    <property name="text">
     <string>Manual</string>
-   </property>
-  </action>
-  <action name="actionUndo_2">
-   <property name="text">
-    <string>Undo</string>
-   </property>
-  </action>
-  <action name="actionRedo_2">
-   <property name="text">
-    <string>Redo</string>
-   </property>
-  </action>
-  <action name="actionZoom_in_2">
-   <property name="text">
-    <string>Zoom-in</string>
-   </property>
-  </action>
-  <action name="actionZoom_out_2">
-   <property name="text">
-    <string>Zoom-out</string>
-   </property>
-  </action>
-  <action name="actionTransform_2">
-   <property name="text">
-    <string>Transform</string>
-   </property>
-  </action>
-  <action name="actionDeform_2">
-   <property name="text">
-    <string>Deform</string>
    </property>
   </action>
  </widget>

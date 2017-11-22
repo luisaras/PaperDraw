@@ -67,11 +67,7 @@ private slots:
 
     void on_actionUndo_triggered();
 
-    void on_actionUndo_2_triggered();
-
     void on_actionRedo_triggered();
-
-    void on_actionRedo_2_triggered();
 
     void on_actionShow_hide_camera_image_triggered();
 

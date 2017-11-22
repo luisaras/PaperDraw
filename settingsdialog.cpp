@@ -84,7 +84,6 @@ void SettingsDialog::updateButton(Button &b, int i) {
     QKeySequence seq = QKeySequence(keyLines[i]->text());
     if (seq.count() == 1) {
         b.key = seq[0];
-        std::cout << b.key << std::endl;
     }
 }
 

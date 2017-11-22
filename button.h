@@ -1,6 +1,8 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
+#include <QColor>
+
 struct Button {
     bool useMouse = false;
     bool useKey = false;
