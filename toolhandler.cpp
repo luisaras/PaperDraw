@@ -2,6 +2,8 @@
 #include <QRect>
 #include <QPen>
 #include <QDesktopWidget>
+#include <queue>
+#include <iostream>
 
 ToolHandler::ToolHandler(QImage *_layer, Button &_button, QPoint &_pos, QPoint &_lastPos) :
     layer(_layer), button(_button), pos(_pos), lastPos(_lastPos) {}
@@ -38,4 +40,44 @@ void ToolHandler::useEraser() {
     }
 }
 
-void ToolHandler::useBucket() {}
+void ToolHandler::useBucket() {
+    if (pos.x() < 0 || pos.x() >= layer->width())
+        return;
+    if (pos.y() < 0 || pos.y() >= layer->height())
+        return;
+    std::queue<QPoint> points;
+    QColor initColor = layer->pixelColor(pos);
+    if (initColor == button.color)
+        return;
+    points.push(pos);
+    while(!points.empty()) {
+        QPoint &p = points.back();
+        points.pop();
+        layer->setPixelColor(p, button.color);
+        if (p.x() < layer->width() - 1) {
+            QPoint p2(p.x() + 1, p.y());
+            QColor c = layer->pixelColor(p2);
+            if (c == initColor && c != button.color) {
+                points.push(p2);
+            }
+        }
+        if (p.x() > 0) {
+            QPoint p2(p.x() - 1, p.y());
+            QColor c = layer->pixelColor(p2);
+            if (c == initColor && c != button.color)
+                points.push(p2);
+        }
+        if (p.y() < layer->height() - 1) {
+            QPoint p2(p.x(), p.y() + 1);
+            QColor c = layer->pixelColor(p2);
+            if (c == initColor && c != button.color)
+                points.push(p2);
+        }
+        if (p.y() > 0) {
+            QPoint p2(p.x(), p.y() - 1);
+            QColor c = layer->pixelColor(p2);
+            if (c == initColor && c != button.color)
+                points.push(p2);
+        }
+    }
+}

@@ -3,17 +3,18 @@
 #include <qcolordialog.h>
 #include <iostream>
 
-ToolWindow::ToolWindow(QWidget *parent) :
+ToolWindow::ToolWindow(QWidget *parent, Button& initial) :
     QWidget(parent, Qt::Window | Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint),
     ui(new Ui::ToolWindow)
 {
     ui->setupUi(this);
     setWindowTitle("Tool");
     setWindowModality(Qt::NonModal);
+    setTool(initial);
 }
 
 void ToolWindow::setTool(Button &b) {
-    button = b;
+    button = &b;
     ui->toolBox->setCurrentIndex(b.tool);
     ui->spinBox->setValue(b.size);
     setColor(b.color);
@@ -32,10 +33,10 @@ void ToolWindow::setColor(QColor& init) {
 }
 
 void ToolWindow::getColor() {
-    QColor color = QColorDialog::getColor(button.color, this);
+    QColor color = QColorDialog::getColor(button->color, this);
     if (color.isValid()) {
         setColor(color);
-        button.color = color;
+        button->color = color;
     }
 }
 
@@ -44,11 +45,11 @@ void ToolWindow::on_setColor_clicked() {
 }
 
 void ToolWindow::on_spinBox_valueChanged(int arg1) {
-    button.size = arg1;
+    button->size = arg1;
 }
 
 void ToolWindow::on_toolBox_currentIndexChanged(int index) {
-    button.tool = index;
+    button->tool = index;
 }
 
 ToolWindow::~ToolWindow() { delete ui; }

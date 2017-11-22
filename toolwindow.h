@@ -15,10 +15,10 @@ class ToolWindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit ToolWindow(QWidget *parent = 0);
+    explicit ToolWindow(QWidget *parent, Button &initial);
     ~ToolWindow();
 
-    Button button;
+    Button* button;
     void setTool(Button &button);
 
 private slots:

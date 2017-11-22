@@ -43,9 +43,8 @@ MainWindow::MainWindow(QWidget *parent) :
     newLayer();
     file.bg = new QImage("sketch.jpg");
 
-    toolWindow = new ToolWindow(this);
+    toolWindow = new ToolWindow(this, buttons[0]);
     toolWindow->show();
-    toolWindow->setTool(buttons[0]);
 
     LayersWindow* lw = new LayersWindow(this);
     lw->show();
@@ -87,7 +86,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
         cursorY = pos.y();
     QPoint lastPos(cursorX, cursorY);
     toolWindow->setTool(buttons[i]);
-    ToolHandler handler(file.layers[file.layer], toolWindow->button, pos, lastPos);
+    ToolHandler handler(file.layers[file.layer], buttons[i], pos, lastPos);
     handler.useTool();
     cursorX = pos.x();
     cursorY = pos.y();
