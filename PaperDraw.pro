@@ -25,7 +25,8 @@ HEADERS  += mainwindow.h \
     layerswindow.h \
     toolwindow.h \
     button.h \
-    toolhandler.h
+    toolhandler.h \
+    calibration.h
 
 FORMS    += mainwindow.ui \
     calibrationdialog.ui \

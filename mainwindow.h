@@ -5,6 +5,7 @@
 #include <QColor>
 #include <QImage>
 #include "toolwindow.h"
+#include "calibration.h"
 #define TBUTTONS 3
 #define INITW 300
 #define INITH 200
@@ -26,7 +27,6 @@ struct State {
 };
 
 struct File {
-    QImage* bg;
     std::vector<QImage*> layers;
     uint width = INITW;
     uint height = INITH;
@@ -53,6 +53,7 @@ public:
     void useBucket(QPainter &painter, QPoint &pos);
 
     File file;
+    Calibration calibration;
     Button buttons[TBUTTONS];
 
 protected:
@@ -71,20 +72,34 @@ private slots:
 
     void on_actionShow_hide_camera_image_triggered();
 
+    void on_actionZoom_in_triggered();
+
+    void on_actionZoom_out_triggered();
+
+    void on_actionRotate_clockwise_triggered();
+
+    void on_actionRotate_counter_clockwise_triggered();
+
+    void on_actionInvert_horizontally_triggered();
+
 private:
     Ui::MainWindow *ui;
     ToolWindow* toolWindow;
     double cursorX = -1;
     double cursorY = -1;
-    double offsetX = 0;
-    double offsetY = 0;
     std::vector<State> actionStack;
     uint state = 0;
     int usedButton = -1;
 
     bool showCamera = true;
+    int invert = 1;
+    int rotation = 0;
+    double zoom = 1;
+    QTransform xform;
+    QTransform ixform;
 
     int getButton(int key);
+    void recalcMatrix();
 };
 
 #endif // MAINWINDOW_H

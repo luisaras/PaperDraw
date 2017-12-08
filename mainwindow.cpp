@@ -39,9 +39,18 @@ MainWindow::MainWindow(QWidget *parent) :
     buttons[2].key = Qt::Key_3;
 
     // Test file
+    calibration = Calibration();
+    calibration.img = new QImage("mobile.jpg");
+    int w = calibration.img->width(), h = calibration.img->height();
+    calibration.area[0] = QPoint(0, 0);
+    calibration.area[1] = QPoint(w - 1, 0);
+    calibration.area[2] = QPoint(w - 1,  h - 1);
+    calibration.area[3] = QPoint(0, h - 1);
+    calibration.area[4] = QPoint(0, 0);
+    file.width = w;
+    file.height = h;
     newLayer();
     newLayer();
-    file.bg = new QImage("sketch.jpg");
 
     toolWindow = new ToolWindow(this, buttons[0]);
     toolWindow->show();
@@ -49,20 +58,29 @@ MainWindow::MainWindow(QWidget *parent) :
     LayersWindow* lw = new LayersWindow(this);
     lw->show();
 
-    QRect r = geometry();
-    offsetX = r.width() / 2 - file.width / 2;
-    offsetY = r.height() / 2 - file.height / 2;
+    recalcMatrix();
 }
 
 void MainWindow::paintEvent(QPaintEvent *) {
+    if (!calibration.img)
+        return;
     QPainter painter(this);
-    if (file.bg and showCamera) {
-        painter.drawImage(offsetX, offsetY, *file.bg);
+    painter.setTransform(xform);
+    // Background
+    if (calibration.img && showCamera) {
+        painter.drawImage(0, 0, *calibration.img);
     }
-    painter.drawRect(offsetX, offsetY, file.width, file.height);
+    // Layers
+    painter.drawPolyline(calibration.area, 5);
     for (uint i = 0; i < file.layers.size(); i++) {
-        painter.drawImage(offsetX, offsetY, *file.layers[i]);
+        painter.drawImage(0, 0, *file.layers[i]);
     }
+    // Cursor
+    /*
+    painter.setTransform(QTransform());
+    QPoint pos = mapFromGlobal(QCursor::pos());
+    painter.drawLine(pos.x() - 2, pos.y() - 2, pos.x() + 2, pos.y() + 2);
+    painter.drawLine(pos.x() + 2, pos.y() - 2, pos.x() - 2, pos.y() + 2);*/
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
@@ -79,7 +97,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
     if (!event->isAutoRepeat())
         newState();
 
-    QPoint pos = mapFromGlobal(QCursor::pos()) - QPoint(offsetX, offsetY);
+    QPoint pos = mapFromGlobal(QCursor::pos());
+    pos = ixform.map(pos);
+
     if (cursorX < 0)
         cursorX = pos.x();
     if (cursorY < 0)
@@ -129,8 +149,9 @@ void MainWindow::newState() {
 }
 
 void MainWindow::on_actionCalibrate_triggered() {
-    CalibrationDialog* dialog = new CalibrationDialog(this);
+    CalibrationDialog* dialog = new CalibrationDialog(this, &calibration);
     dialog->exec();
+    repaint();
     delete dialog;
 }
 
@@ -158,9 +179,50 @@ void MainWindow::on_actionRedo_triggered() {
     }
 }
 
+MainWindow::~MainWindow() { delete ui; }
+
+void MainWindow::recalcMatrix() {
+    QRect r = geometry();
+    QTransform t;
+    t.translate(r.width() / 2, r.height() / 2);
+    t.rotate(rotation);
+    t.scale(invert * zoom, zoom);
+    t.translate(-calibration.img->width() / 2, -calibration.img->height() / 2);
+    xform = t;
+    ixform = t.inverted();
+    repaint();
+}
+
 void MainWindow::on_actionShow_hide_camera_image_triggered() {
     showCamera = !showCamera;
     repaint();
 }
 
-MainWindow::~MainWindow() { delete ui; }
+void MainWindow::on_actionZoom_in_triggered() {
+    if (zoom < 8) {
+        zoom *= 2;
+        recalcMatrix();
+    }
+}
+
+void MainWindow::on_actionZoom_out_triggered() {
+    if (zoom > 1 / 8) {
+        zoom /= 2;
+        recalcMatrix();
+    }
+}
+
+void MainWindow::on_actionRotate_clockwise_triggered() {
+    rotation = (rotation + 15) % 360;
+    recalcMatrix();
+}
+
+void MainWindow::on_actionRotate_counter_clockwise_triggered() {
+    rotation = (rotation + 345) % 360;
+    recalcMatrix();
+}
+
+void MainWindow::on_actionInvert_horizontally_triggered() {
+    invert *= -1;
+    recalcMatrix();
+}
